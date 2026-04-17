@@ -24,8 +24,6 @@ function App() {
   const [bookedSlots, setBookedSlots] = useState([]);
   const [selectedDate, setSelectedDate] = useState('');
   const [activeFaq, setActiveFaq] = useState(null);
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState('');
 
   useEffect(() => {
     fetchTimeSlots();
@@ -133,14 +131,6 @@ function App() {
     }, 3000);
   };
 
-  const showNotificationPopup = (message) => {
-    setPopupMessage(message);
-    setShowPopup(true);
-    setTimeout(() => {
-      setShowPopup(false);
-    }, 3000);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -180,8 +170,10 @@ function App() {
       const response = await axios.post(`${API_URL}/book-appointment`, formData);
       
       if (response.data.success) {
-        // Show popup notification instead of message
-        showNotificationPopup('✅ Appointment Booked Successfully!');
+        setMessage({ 
+          type: 'success', 
+          text: `✅ APPOINTMENT CONFIRMED! Booking ID: ${response.data.appointmentId}` 
+        });
         
         setFormData({
           patientName: '',
@@ -265,16 +257,6 @@ function App() {
 
   return (
     <div className="container">
-      {/* Popup Notification */}
-      {showPopup && (
-        <div className="popup-notification">
-          <div className="popup-content">
-            <span className="popup-icon">✅</span>
-            <span className="popup-text">{popupMessage}</span>
-          </div>
-        </div>
-      )}
-
       <nav className="navbar">
         <div className="logo">🏥 CareConnect</div>
         <div className="nav-links">
@@ -358,6 +340,7 @@ function App() {
               <label>Available Time Slots (IST) *</label>
               <div className="time-slots">
                 {timeSlots.map(slot => {
+                  const isBooked = isSlotBooked(slot);
                   const isSelected = selectedSlot === slot;
                   return (
                     <button
