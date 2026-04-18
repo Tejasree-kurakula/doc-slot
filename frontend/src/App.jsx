@@ -302,11 +302,11 @@ function App() {
               <div className="form-group">
                 <label>Select Service *</label>
                 <select name="service" value={formData.service} onChange={handleChange}>
-                  <option value="Cardiologist">❤️ Cardiologist</option>
-                  <option value="Gynecologist">🌸 Gynecologist</option>
-                  <option value="Orthopedic">🦴 Orthopedic</option>
-                  <option value="Dermatologist">🧴 Dermatologist</option>
-                  <option value="Neurologist">🧠 Neurologist</option>
+                  <option value="Cardiologist"> Cardiologist</option>
+                  <option value="Gynecologist"> Gynecologist</option>
+                  <option value="Orthopedic"> Orthopedic</option>
+                  <option value="Dermatologist"> Dermatologist</option>
+                  <option value="Neurologist"> Neurologist</option>
                 </select>
               </div>
             </div>
@@ -329,7 +329,7 @@ function App() {
                   <option value="">-- Select a doctor --</option>
                   {doctors[formData.service]?.map((doc, idx) => (
                     <option key={idx} value={doc.name}>
-                      👨‍⚕️ {doc.name} - {doc.exp} (⭐ {doc.rating})
+                       {doc.name} - {doc.exp} (⭐ {doc.rating})
                     </option>
                   ))}
                 </select>
@@ -366,9 +366,9 @@ function App() {
               <small>
                 {formData.doctorName && selectedDate ? (
                   bookedSlots.length > 0 ? 
-                    `⚠️ ${bookedSlots.length} slot(s) are already booked. Click on any slot to check availability.` : 
-                    '✅ All slots are available! Click on a slot to select.'
-                ) : '👆 Select a doctor and date first'}
+                    ` ${bookedSlots.length} slot(s) are already booked. Click on any slot to check availability.` : 
+                    ' All slots are available! Click on a slot to select.'
+                ) : ' Select a doctor and date first'}
               </small>
             </div>
 
